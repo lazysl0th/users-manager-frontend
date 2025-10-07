@@ -42,7 +42,7 @@ export default function Register ({onReg,  onValidate, validState}) {
               <h2 className='text-start mb-5'>Sign Up to The App</h2>
               <Form.Group className="mb-3" controlId="formGroupEmail">
                 <FloatingLabel
-                  controlId="floatingInput"
+                  controlId="floatingInputName"
                   label="Name"
                   className="mb-3"
                 >
@@ -59,7 +59,7 @@ export default function Register ({onReg,  onValidate, validState}) {
                   </Form.Control.Feedback>
                 </FloatingLabel>
                 <FloatingLabel
-                  controlId="floatingInput"
+                  controlId="floatingInputEmail"
                   label="Email"
                   className="mb-3"
                 >
@@ -75,7 +75,7 @@ export default function Register ({onReg,  onValidate, validState}) {
                   </Form.Control.Feedback>
                 </FloatingLabel>
                 <Form.Group className="mb-3" controlId="formGroupPassword" style={{ position: 'relative' }} >
-                  <FloatingLabel controlId="floatingPassword" label="Password">
+                  <FloatingLabel controlId="floatingLabelPassword" label="Password">
                     <Form.Control 
                       type={showPassword ? 'text' : 'password'}
                       name="password"
