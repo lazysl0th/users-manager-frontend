@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Form, Button, Image, Navbar, FloatingLabel} from 'react-bootstrap';
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 
 export default function ChangePassword ({onChangePass, onValidate, validState}) {
+  const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [searchParams] = useSearchParams();
@@ -17,7 +18,6 @@ export default function ChangePassword ({onChangePass, onValidate, validState}) 
     if (!isValid) return;
     onChangePass(password, token);
     setPassword('');
-    navigate('/');
   }
 
   return (

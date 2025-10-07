@@ -43,6 +43,7 @@ export default function App() {
 
   const checkCurrentUser = async() => {
     try {
+      if (!localStorage.getItem('token')) return
       const user = await api.checkToken();
       if (Object.keys(user).length) {
         setCurrentUser({
@@ -53,9 +54,11 @@ export default function App() {
         return user
       } else {
         setCurrentUser({ loggedIn: false, });
+        signOut()
       }
     } catch (e) {
       console.log(e);
+      signOut();
     }
   }
 
@@ -109,7 +112,6 @@ export default function App() {
         [form.getAttribute('name')]: false,
       }));
     }
-
     return isValid;
   };
 
@@ -136,11 +138,8 @@ export default function App() {
 
   const signOut = () => {
     localStorage.removeItem('token');
-    setCurrentUser({
-          ...user,
-          loggedIn: false,
-        });
-      navigate('/sign-in');
+    setCurrentUser({ loggedIn: false, });
+    navigate('/sign-in');
   }
 
   const handleChangePass = async(password, token) => {
@@ -156,9 +155,9 @@ export default function App() {
         setIsModalWindowOpen(true);
       }
     } catch (e) {
-      console.log(e);
+      console.log({e});
       setModalTitle('Error')
-      setModalMessage(dataError.message)
+      setModalMessage(e.message)
       setIsModalWindowOpen(true);
     }
   }
@@ -184,8 +183,7 @@ export default function App() {
   }
 
   const handleOnBlockUser = async (rowSelection) => {
-    const user = await checkCurrentUser();
-    if (!user) return signOut()
+    await checkCurrentUser();
     try {
       const usersId = Object.keys(rowSelection);
       const blockUsers = await api.blockUsers(usersId);
@@ -194,13 +192,15 @@ export default function App() {
       setModalMessage(blockSuccess);
       setIsModalWindowOpen(true);
     } catch (e) {
-      console.log(e)
+      console.log(e);
+      setModalTitle('Error')
+      setModalMessage(e.message)
+      setIsModalWindowOpen(true);
     }
   }
 
   const handleOnUnblockUser = async (rowSelection) => {
-    const user = await checkCurrentUser();
-    if (!user) return signOut()
+    await checkCurrentUser();
     try {
       const usersId = Object.keys(rowSelection);
       const unblockUsers = await api.unblockUsers(usersId);
@@ -209,13 +209,15 @@ export default function App() {
       setModalMessage(unblockSuccess);
       setIsModalWindowOpen(true);
     } catch (e) {
-      console.log(e)
+      console.log(e);
+      setModalTitle('Error')
+      setModalMessage(e.message)
+      setIsModalWindowOpen(true);
     }
   }
 
   const handleDeleteUser = async (rowSelection) => {
-    const user = await checkCurrentUser();
-    if (!user) return signOut()
+    await checkCurrentUser();
     try {
       const usersId = Object.keys(rowSelection);
       const deletedUsers = await api.deleteUsers(usersId);
@@ -224,13 +226,15 @@ export default function App() {
       setModalMessage(deleteSuccess);
       setIsModalWindowOpen(true);
     } catch (e) {
-      console.log(e)
+      console.log(e);
+      setModalTitle('Error')
+      setModalMessage(e.message)
+      setIsModalWindowOpen(true);
     }
   }
 
   const handleDeleteUnverified = async () => {
-    const user = await checkCurrentUser();
-    if (!user) return signOut()
+    await checkCurrentUser();
       try {
         const deletedUsers = await api.deleteUnverifiedUsers();
         setUsers(prev => prev.filter(user => !deletedUsers.map(user => user.id).includes(user.id)));
@@ -238,7 +242,7 @@ export default function App() {
         setModalMessage(deleteSuccess);
         setIsModalWindowOpen(true);
       } catch (e) {
-      console.log(e);
+        console.log(e);
         setModalTitle('Error')
         setModalMessage(e.message)
         setIsModalWindowOpen(true);

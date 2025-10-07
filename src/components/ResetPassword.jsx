@@ -16,7 +16,6 @@ export default function ResetPassword({onResPass, onValidate, validState}) {
     if (!isValid) return;
     onResPass(email);
     setEmail('');
-    navigate('/');
   }
 
   return (

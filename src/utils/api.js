@@ -48,6 +48,7 @@ const checkResponse = async (res) => {
     return await res.json();
   }
   const errorData = await res.json();
+  console.log(errorData)
   return Promise.reject(errorData); 
 }
 
@@ -105,6 +106,7 @@ export const changePassword = async({password, token}) => {
     headers: apiConfig.headers(),
     body: JSON.stringify({ password, token})
   });
+  console.log(res);
   return checkResponse(res);
 }
 
