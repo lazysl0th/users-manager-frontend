@@ -1,0 +1,39 @@
+#root {
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+
+.min-w-320px {
+  min-width: 320px;
+}
+
+.w-200px {
+  width: 200px
+}
+
+.w-296px {
+  width: 296pxx;
+}
+
+.container-background {
+  background-image: url('./assets/background.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.column-background {
+  background-color: white;
+}
+
+.table-scroll-container {
+  max-height: 450px;
+  overflow-y: auto;
+}
+
+.table-scroll-container thead th {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
+}
