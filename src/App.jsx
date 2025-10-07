@@ -77,12 +77,13 @@ export default function App() {
       if (!email || !password) return;
       const userData = await api.authorize({email, password, remember})
       if (userData) {
+        localStorage.setItem('token', userData.token);
         setCurrentUser(() => ({
           ...userData,
           loggedIn: true,
         }));
-        navigate('/');
       }
+      navigate('/');
     } catch (e) {
       console.log(e);
       setModalTitle('Error')
@@ -134,16 +135,12 @@ export default function App() {
   }
 
   const signOut = () => {
-    try{
-      const user = api.logout();
-      setCurrentUser({
+    localStorage.removeItem('token');
+    setCurrentUser({
           ...user,
           loggedIn: false,
         });
       navigate('/sign-in');
-    } catch (e) {
-      console.log(e)
-    }
   }
 
   const handleChangePass = async(password, token) => {
