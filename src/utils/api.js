@@ -34,7 +34,7 @@ export const checkToken = async () => {
 }
 
 export const logout = async() => {
-  const res = await fetch(`${apiConfig.baseUrl}/signin`, {
+  const res = await fetch(`${apiConfig.baseUrl}/signout`, {
     method: 'GET',
     credentials: 'include',
   });

@@ -170,7 +170,6 @@ export default function App() {
     try {
       if (!email) return
       const userData = await api.resetPassword({email})
-      console.log(userData)
       if(userData) {
         setModalTitle(titleSuccess);
         setModalMessage(textResetPasswordSuccess);
